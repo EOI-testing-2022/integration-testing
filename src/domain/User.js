@@ -1,55 +1,37 @@
-import crypto from "node:crypto"
+import { UserEmail } from "./UserEmail.js"
+import { UserPassword } from "./UserPassword.js"
+import { UserAge } from "./UserAge.js"
 
 export class User {
-  #id
-  #name
-  #email
-  #age
-  #password
-
   constructor(id, name, email, password, age) {
-    this.#id = id
-    this.#name = name
-    this.#email = email
-    this.#age = age
-    this.#password = crypto.createHash("sha256").update(password).digest().toString("hex")
-
-    if (this.#age < 18) {
-      throw new Error("User must be 18 or older")
-    }
-
-    if (password.length < 6) {
-      throw new Error("Password must be 6 characters or longer")
-    }
-
-    if (!email.includes("@")) {
-      throw new Error("Invalid email")
-    }
+    this.id = id
+    this.name = name
+    this.email = new UserEmail(email)
+    this.age = new UserAge(age)
+    this.password = new UserPassword(password)
   }
 
   hasId(id) {
-    return this.#id === id
+    return this.id === id
   }
 
   hasName(name) {
-    return this.#name === name
+    return this.name === name
   }
 
   hasEmail(email) {
-    return this.#email === email
+    return this.email.equals(new UserEmail(email))
   }
 
   hasAge(age) {
-    return this.#age === age
+    return this.age.equals(new UserAge(age))
   }
 
-  hasPassword(password) {
-    const hash = crypto.createHash("sha256").update(password).digest().toString("hex")
-
-    return this.#password === hash
+  compareWith(plainPassword) {
+    return this.password.compareWith(plainPassword)
   }
 
   getPassword() {
-    return this.#password
+    return this.password
   }
 }
