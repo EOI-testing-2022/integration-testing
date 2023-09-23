@@ -19,7 +19,8 @@
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint .",
     "format:fix": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "migrate": "node migrations/migrate-up.js"
   },
   "repository": {
     "type": "git",
