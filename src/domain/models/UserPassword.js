@@ -1,12 +1,18 @@
 import crypto from "node:crypto"
 
 export class UserPassword {
-  constructor(password) {
-    if (password.length < 6) {
+  static fromPlain(plainPassword) {
+    if (plainPassword.length < 6) {
       throw new Error("Password must be 6 characters or longer")
     }
 
-    this.password = crypto.createHash("sha256").update(password).digest().toString("hex")
+    const hashed = crypto.createHash("sha256").update(plainPassword).digest().toString("hex")
+
+    return new UserPassword(hashed)
+  }
+
+  constructor(password) {
+    this.password = password
   }
 
   compareWith(plainPassword) {
