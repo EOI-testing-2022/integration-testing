@@ -13,11 +13,11 @@ jobs:
       postgres:
         image: postgres:12.8-alpine
         ports:
-          - '5432:5432'
+          - "5432:5432"
         env:
-          POSTGRES_USER: 'admin'
-          POSTGRES_PASSWORD: 'password'
-          POSTGRES_DB: 'my-project'
+          POSTGRES_USER: "admin"
+          POSTGRES_PASSWORD: "password"
+          POSTGRES_DB: "my-project"
       mongo:
         image: mongo:6.0.7-jammy
         env:
