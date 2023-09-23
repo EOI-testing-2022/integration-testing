@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
-import { UserRepositoryMock } from "../infrastructure/UserRepositoryMock.js"
+import { UserRepositoryMock } from "../infrastructure/UserRepository/UserRepositoryMock.js"
 import { RegisterUser } from "./RegisterUser.js"
 import { User } from "../domain/models/User.js"
-import { IdGeneratorMock } from "../infrastructure/IdGeneratorMock.js"
-import { EmailSenderMock } from "../infrastructure/EmailSenderMock.js"
+import { IdGeneratorMock } from "../infrastructure/IdGenerator/IdGeneratorMock.js"
+import { EmailSenderMock } from "../infrastructure/EmailSender/EmailSenderMock.js"
 
 describe("RegisterUser", () => {
   let userRepository
