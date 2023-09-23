@@ -13,6 +13,8 @@
   },
   "scripts": {
     "test": "vitest",
+    "test:unitary": "vitest",
+    "test:integration": "vitest --testNamePattern integration",
     "test:coverage": "vitest --coverage",
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint .",

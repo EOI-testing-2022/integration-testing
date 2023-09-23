@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, afterEach } from "vitest"
 import { User } from "../../domain/models/User.js"
 import { UserRepositoryMongo } from "./UserRepositoryMongo.js"
 
-describe("UserRepositoryMongo", () => {
+describe("UserRepositoryMongo integration", () => {
   let userRepository
 
   beforeEach(async () => {
