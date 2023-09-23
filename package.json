@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/AgileCraftsmanshipCanarias/kata-setup-javascript/issues"
   },
-  "homepage": "https://github.com/AgileCraftsmanshipCanarias/kata-setup-javascript#readme"
+  "homepage": "https://github.com/AgileCraftsmanshipCanarias/kata-setup-javascript#readme",
+  "dependencies": {
+    "pg": "^8.11.3"
+  }
 }
