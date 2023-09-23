@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { UserRepositoryMock } from "../infrastructure/UserRepositoryMock.js"
 import { RegisterUser } from "./RegisterUser.js"
-import { User } from "../domain/User.js"
+import { User } from "../domain/models/User.js"
 import { IdGeneratorMock } from "../infrastructure/IdGeneratorMock.js"
 import { EmailSenderMock } from "../infrastructure/EmailSenderMock.js"
 

@@ -1,4 +1,4 @@
-import { EmailSender } from "../domain/EmailSender.js"
+import { EmailSender } from "../domain/services/EmailSender.js"
 
 export class EmailSenderMock extends EmailSender {
   send() {}

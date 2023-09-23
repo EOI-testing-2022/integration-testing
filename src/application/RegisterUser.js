@@ -1,4 +1,4 @@
-import { User } from "../domain/User.js"
+import { User } from "../domain/models/User.js"
 
 export class RegisterUser {
   constructor(userRepository, idGenerator, emailSender) {
