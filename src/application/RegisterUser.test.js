@@ -1,30 +1,36 @@
-import { describe, it, expect, vi } from "vitest"
+import { describe, it, expect, vi, beforeEach } from "vitest"
 import { UserRepositoryMock } from "../infrastructure/UserRepositoryMock.js"
 import { RegisterUser } from "./RegisterUser.js"
 import { User } from "../domain/User.js"
 import { IdGeneratorMock } from "../infrastructure/IdGeneratorMock.js"
+import { EmailSenderMock } from "../infrastructure/EmailSenderMock.js"
 
 describe("RegisterUser", () => {
-  it("must save the user in the repository", async () => {
-    const userRepository = new UserRepositoryMock()
-    vi.spyOn(userRepository, "save")
-    const idGenerator = new IdGeneratorMock()
-    const registerUser = new RegisterUser(userRepository, idGenerator)
-    const notImportantName = "John Doe"
-    const notImportantEmail = "john@email.com"
-    const notImportantAge = 18
-    const notImportantPassword = "password"
+  let userRepository
+  let idGenerator
+  let registerUser
+  let emailSender
+  const notImportantName = "John Doe"
+  const notImportantEmail = "john@email.com"
+  const notImportantAge = 18
+  const notImportantPassword = "password"
 
+  beforeEach(() => {
+    userRepository = new UserRepositoryMock()
+    vi.spyOn(userRepository, "save")
+    idGenerator = new IdGeneratorMock()
+    emailSender = new EmailSenderMock()
+    vi.spyOn(emailSender, "send")
+    registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
+  })
+
+  it("must save the user in the repository", async () => {
     await registerUser.execute(notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(userRepository.save).toHaveBeenCalled()
   })
 
   it("must save the user with the correct data", async () => {
-    const userRepository = new UserRepositoryMock()
-    vi.spyOn(userRepository, "save")
-    const idGenerator = new IdGeneratorMock()
-    const registerUser = new RegisterUser(userRepository, idGenerator)
     const name = "John Doe"
     const email = "john@email.com"
     const age = 18
@@ -37,17 +43,18 @@ describe("RegisterUser", () => {
   })
 
   it("must throw an error if the user already exists", async () => {
-    const userRepository = new UserRepositoryMock()
     vi.spyOn(userRepository, "existsByEmail").mockReturnValue(true)
-    const idGenerator = new IdGeneratorMock()
-    const registerUser = new RegisterUser(userRepository, idGenerator)
-    const notImportantName = "John Doe"
-    const notImportantEmail = "john@email.com"
-    const notImportantAge = 18
-    const notImportantPassword = "password"
 
     const result = registerUser.execute(notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(result).rejects.toThrow("User already exists")
+  })
+
+  it("sends a welcome email to the user", async () => {
+    const email = "john@email.com"
+
+    await registerUser.execute(notImportantName, email, notImportantPassword, notImportantAge)
+
+    expect(emailSender.send).toHaveBeenCalledWith(email, "Welcome to our platform!")
   })
 })
