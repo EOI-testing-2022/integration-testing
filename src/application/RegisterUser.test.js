@@ -38,7 +38,7 @@ describe("RegisterUser", () => {
 
     await registerUser.execute(name, email, password, age)
 
-    const user = new User(IdGeneratorMock.MOCK_ID, name, email, password, age)
+    const user = User.create(IdGeneratorMock.MOCK_ID, name, email, password, age)
     expect(userRepository.save).toHaveBeenCalledWith(user)
   })
 

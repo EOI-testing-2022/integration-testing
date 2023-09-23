@@ -14,7 +14,7 @@ export class RegisterUser {
       throw new Error("User already exists")
     }
 
-    const user = new User(this.idGenerator.generate(), name, email, password, age)
+    const user = User.create(this.idGenerator.generate(), name, email, password, age)
 
     await this.emailSender.send(email, "Welcome to our platform!")
 

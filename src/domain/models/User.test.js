@@ -11,7 +11,7 @@ describe("User", () => {
   it("has an id", () => {
     const userId = "f969af7f-bc05-46ed-8a82-62a9f49f4927"
 
-    const user = new User(userId, notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
+    const user = User.create(userId, notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(user.hasId(userId)).toBe(true)
   })
@@ -20,7 +20,7 @@ describe("User", () => {
     const userId = "f969af7f-bc05-46ed-8a82-62a9f49f4927"
     const otherId = "54124556-9B55-4924-A9A3-51E8B20769C4"
 
-    const user = new User(userId, notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
+    const user = User.create(userId, notImportantName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(user.hasId(otherId)).toBe(false)
   })
@@ -28,7 +28,7 @@ describe("User", () => {
   it("has a name", () => {
     const userName = "Maria"
 
-    const user = new User(notImportantId, userName, notImportantEmail, notImportantPassword, notImportantAge)
+    const user = User.create(notImportantId, userName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(user.hasName(userName)).toBe(true)
   })
@@ -37,7 +37,7 @@ describe("User", () => {
     const userName = "Maria"
     const otherUserName = "Jose"
 
-    const user = new User(notImportantId, userName, notImportantEmail, notImportantPassword, notImportantAge)
+    const user = User.create(notImportantId, userName, notImportantEmail, notImportantPassword, notImportantAge)
 
     expect(user.hasName(otherUserName)).toBe(false)
   })
@@ -45,7 +45,7 @@ describe("User", () => {
   it("has an email", () => {
     const email = "maria@email.com"
 
-    const user = new User(notImportantId, notImportantName, email, notImportantPassword, notImportantAge)
+    const user = User.create(notImportantId, notImportantName, email, notImportantPassword, notImportantAge)
 
     expect(user.hasEmail(email)).toBe(true)
   })
@@ -54,7 +54,7 @@ describe("User", () => {
     const email = "maria@email.com"
     const otherEmail = "jose@email.com"
 
-    const user = new User(notImportantId, notImportantName, email, notImportantPassword, notImportantAge)
+    const user = User.create(notImportantId, notImportantName, email, notImportantPassword, notImportantAge)
 
     expect(user.hasEmail(otherEmail)).toBe(false)
   })
@@ -62,7 +62,7 @@ describe("User", () => {
   it("has an age", () => {
     const age = 18
 
-    const user = new User(notImportantId, notImportantName, notImportantEmail, notImportantPassword, age)
+    const user = User.create(notImportantId, notImportantName, notImportantEmail, notImportantPassword, age)
 
     expect(user.hasAge(age)).toBe(true)
   })
@@ -71,7 +71,7 @@ describe("User", () => {
     const age = 18
     const otherAge = 20
 
-    const user = new User(notImportantId, notImportantName, notImportantEmail, notImportantPassword, age)
+    const user = User.create(notImportantId, notImportantName, notImportantEmail, notImportantPassword, age)
 
     expect(user.hasAge(otherAge)).toBe(false)
   })
@@ -79,7 +79,7 @@ describe("User", () => {
   it("has a password", () => {
     const password = "password"
 
-    const user = new User(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
+    const user = User.create(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
 
     expect(user.compareWith(password)).toBe(true)
   })
@@ -88,7 +88,7 @@ describe("User", () => {
     const password = "password"
     const anotherPassword = "anotherPassword"
 
-    const user = new User(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
+    const user = User.create(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
 
     expect(user.compareWith(anotherPassword)).toBe(false)
   })
@@ -96,7 +96,7 @@ describe("User", () => {
   it("keeps the password hashed", () => {
     const password = "password"
 
-    const user = new User(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
+    const user = User.create(notImportantId, notImportantName, notImportantEmail, password, notImportantAge)
 
     expect(user.getPassword()).not.toBe(password)
   })
@@ -104,24 +104,24 @@ describe("User", () => {
   it("throws an error if age is under 18", () => {
     const underAge = 17
 
-    expect(() => new User(notImportantId, notImportantName, notImportantEmail, notImportantPassword, underAge)).toThrow(
-      "User must be 18 or older",
-    )
+    expect(() =>
+      User.create(notImportantId, notImportantName, notImportantEmail, notImportantPassword, underAge),
+    ).toThrow("User must be 18 or older")
   })
 
   it("throws an error if password if is below 6 characters", () => {
     const tooShortPassword = "12345"
 
-    expect(
-      () => new User(notImportantId, notImportantName, notImportantEmail, tooShortPassword, notImportantAge),
+    expect(() =>
+      User.create(notImportantId, notImportantName, notImportantEmail, tooShortPassword, notImportantAge),
     ).toThrow("Password must be 6 characters or longer")
   })
 
   it("throws an error with an invalid email", () => {
     const invalidEmail = "invalidemail"
 
-    expect(
-      () => new User(notImportantId, notImportantName, invalidEmail, notImportantPassword, notImportantAge),
+    expect(() =>
+      User.create(notImportantId, notImportantName, invalidEmail, notImportantPassword, notImportantAge),
     ).toThrow("Invalid email")
   })
 })
