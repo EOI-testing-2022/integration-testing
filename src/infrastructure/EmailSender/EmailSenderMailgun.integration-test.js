@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest"
-import { EmailSenderSendgrid } from "./EmailSenderSendgrid.js"
+import { EmailSenderMailgun } from "./EmailSenderMailgun.js"
 import { TestInbox } from "./TestInbox.js"
 import { User } from "../../domain/models/User.js"
 
@@ -11,7 +11,7 @@ describe("EmailSenderMailgun", () => {
   let testInbox
 
   beforeEach(() => {
-    emailSender = new EmailSenderSendgrid()
+    emailSender = new EmailSenderMailgun()
     testInbox = new TestInbox()
   })
 

@@ -13,8 +13,8 @@
   },
   "scripts": {
     "test": "vitest",
-    "test:integration": "vitest --config vite.config.integration.js",
-    "test:all": "vitest --config vite.config.all.js",
+    "test:integration": "vitest --run --config vite.config.integration.js",
+    "test:all": "vitest --run --config vite.config.all.js",
     "test:coverage": "vitest --coverage",
     "lint:fix": "eslint . --fix",
     "lint:check": "eslint .",

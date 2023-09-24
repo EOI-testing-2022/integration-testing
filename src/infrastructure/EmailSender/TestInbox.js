@@ -1,9 +1,10 @@
 import { sleep } from "../../domain/utils/sleep.js"
+import { config } from "../Config/config.js"
 
 export class TestInbox {
-  constructor() {
-    this.apiKey = "*****"
-    this.namespace = "9eqfr"
+  constructor({ apiKey = config.testmail.apiKey, namespace = config.testmail.namespace } = {}) {
+    this.apiKey = apiKey
+    this.namespace = namespace
   }
 
   getTestEmailAddress() {
@@ -22,19 +23,20 @@ export class TestInbox {
 
     const data = await response.json()
 
+    if (data.result === "fail") {
+      throw new Error(data.message)
+    }
+
     return data.emails
   }
 
   async getEmailsArrivedInLastSeconds() {
-    return await this.getEmails({ from: new Date(Date.now() - 10000) })
+    return await this.getEmails({ from: new Date(Date.now() - 4000) })
   }
 
   async waitForNextEmail() {
-    const seconds = 10
-    const timeout = seconds * 1000
-    let passedTime = 0
-
-    while (passedTime < timeout) {
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
       const emails = await this.getEmailsArrivedInLastSeconds()
 
       if (emails.length > 0) {
@@ -42,9 +44,6 @@ export class TestInbox {
       }
 
       await sleep(100)
-      passedTime += 100
     }
-
-    throw new Error("Timeout waiting for email")
   }
 }
