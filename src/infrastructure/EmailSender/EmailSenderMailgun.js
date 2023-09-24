@@ -13,7 +13,7 @@ export class EmailSenderMailgun extends EmailSender {
     super()
 
     if (!apiKey) {
-      throw new Error("apiKey is required")
+      throw new Error("EmailSenderMailgun: apiKey is required")
     }
 
     this.apiKey = apiKey

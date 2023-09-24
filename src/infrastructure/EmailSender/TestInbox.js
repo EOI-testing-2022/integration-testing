@@ -5,6 +5,10 @@ export class TestInbox {
   constructor({ apiKey = config.testmail.apiKey, namespace = config.testmail.namespace } = {}) {
     this.apiKey = apiKey
     this.namespace = namespace
+
+    if (!apiKey) {
+      throw new Error("TestInbox: apiKey is required")
+    }
   }
 
   getTestEmailAddress() {
