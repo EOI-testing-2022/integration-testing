@@ -20,7 +20,7 @@ describe("RegisterUser", () => {
     vi.spyOn(userRepository, "save")
     idGenerator = new IdGeneratorMock()
     emailSender = new EmailSenderMock()
-    vi.spyOn(emailSender, "send")
+    vi.spyOn(emailSender, "sendWelcomeEmail")
     registerUser = new RegisterUser(userRepository, idGenerator, emailSender)
   })
 
@@ -51,10 +51,14 @@ describe("RegisterUser", () => {
   })
 
   it("sends a welcome email to the user", async () => {
+    const name = "John Doe"
     const email = "john@email.com"
+    const age = 18
+    const password = "password"
 
     await registerUser.execute(notImportantName, email, notImportantPassword, notImportantAge)
 
-    expect(emailSender.send).toHaveBeenCalledWith(email, "Welcome to our platform!")
+    const user = User.create(IdGeneratorMock.MOCK_ID, name, email, password, age)
+    expect(emailSender.sendWelcomeEmail).toHaveBeenCalledWith(user)
   })
 })
