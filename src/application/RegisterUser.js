@@ -16,7 +16,7 @@ export class RegisterUser {
 
     const user = User.create(this.idGenerator.generate(), name, email, password, age)
 
-    await this.emailSender.send(email, "Welcome to our platform!")
+    await this.emailSender.sendWelcomeEmail(user)
 
     await this.userRepository.save(user)
   }
