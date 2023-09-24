@@ -39,4 +39,4 @@ jobs:
       - run: npm run test:all
         env:
           MAILGUN_API_KEY: ${{ secrets.MAILGUN_API_KEY }}
-          TESTMAIL_NAMESPACE: ${{ secrets.TESTMAIL_NAMESPACE }}
+          TESTMAIL_API_KEY: ${{ secrets.TESTMAIL_API_KEY }}
